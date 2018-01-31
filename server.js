@@ -57,13 +57,13 @@ var listener = app.listen(process.env.PORT, function () {
 function listTeams() {
   var sheets = google.sheets('v4');
   sheets.spreadsheets.values.get({
-    key: sheetsAPI,
     spreadsheetId: '1jN26YeuCpdd82TZzKgtGchqte6da_XTnSeC0DdV8YTA', //change this to another *public* spreadsheet if you want
     range: 'Sheet1!A3:C',
+    key: sheetsAPI
   }, function(err, response) {
     if (err) {
       console.log('The API returned an error: ' + err);
-      console.log(response)
+      console.log(response);
       return;
     }
     var rows = response.values;
