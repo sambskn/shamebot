@@ -57,7 +57,7 @@ var listener = app.listen(process.env.PORT, function () {
 function listTeams() {
   var sheets = google.sheets('v4');
   sheets.spreadsheets.values.get({
-    key: SHEETS_API_KEY,
+    key: sheetsAPI,
     spreadsheetId: '1jN26YeuCpdd82TZzKgtGchqte6da_XTnSeC0DdV8YTA', //change this to another *public* spreadsheet if you want
     range: 'Sheet1!A3:C',
   }, function(err, response) {
