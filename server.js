@@ -3,6 +3,10 @@ var path = require('path'),
     express = require('express'),
     app = express(),   
     Twit = require('twit'),
+    fs = require('fs'),
+    readline = require('readline'),
+    google = require('googleapis'),
+    googleAuth = require('google-auth-library'),
     config = {
     /* Be sure to update the .env file with your API keys. See how to get them: https://botwiki.org/tutorials/how-to-create-a-twitter-app */      
       twitter: {
@@ -14,12 +18,15 @@ var path = require('path'),
     },
     T = new Twit(config.twitter);
 
+    //need to implement google sheets stuff here
+
+
+
 app.use(express.static('public'));
 
 /* You can use uptimerobot.com or a similar site to hit your /BOT_ENDPOINT to wake up your app and make your Twitter bot tweet. */
 
 app.all("/" + process.env.BOT_ENDPOINT, function (request, response) {
-/* The example below tweets out "Hello world!". */
   var resp = response;
   var tweet  = "";
   var date =  new Date().getTime();
