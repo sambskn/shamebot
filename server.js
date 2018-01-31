@@ -56,7 +56,7 @@ function authenticate(callback){
     throw new Error("Didn't find Google Credentials ENV var");
   }
   var keys = JSON.parse(keysEnvVar);
-  var client = auth.fromJSON(keys);
+  var client = googleAuth.fromJSON(keys);
   client.scopes = ['https://www.googleapis.com/auth/cloud-platform'];
   client.authorize( function() {
     callback(client);
