@@ -63,6 +63,7 @@ function listTeams() {
   }, function(err, response) {
     if (err) {
       console.log('The API returned an error: ' + err);
+      console.log(response)
       return;
     }
     var rows = response.values;
