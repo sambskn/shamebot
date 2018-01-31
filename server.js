@@ -7,6 +7,7 @@ var path = require('path'),
     readline = require('readline'),
     google = require('googleapis'),
     googleAuth = require('google-auth-library'),
+    SCOPE = 'https://www.googleapis.com/auth/spreadsheets.readonly',
     config = {
     /* Be sure to update the .env file with your API keys. See how to get them: https://botwiki.org/tutorials/how-to-create-a-twitter-app */      
       twitter: {
@@ -40,7 +41,7 @@ app.all("/" + process.env.BOT_ENDPOINT, function (request, response) {
     }
     else{
       resp.sendStatus(200);
-      listTeams();
+      authenticate(listTeams);
     }
   });
 });
@@ -49,17 +50,24 @@ var listener = app.listen(process.env.PORT, function () {
   console.log('Your bot is running on port ' + listener.address().port);
 });
 
+function authenticate(callback){
+  const auth = googleAuth.getAuthenticatedClient();
+  callback(auth);
+}
 
 /**
  * Print the info for all the teams that suck
  * https://docs.google.com/spreadsheets/d/1jN26YeuCpdd82TZzKgtGchqte6da_XTnSeC0DdV8YTA/edit#gid=0
  */
-function listTeams() {
+function listTeams(authClient) {
   var sheets = google.sheets('v4');
+  
+  
+  console.log(sheetsAPI);
   sheets.spreadsheets.values.get({
     spreadsheetId: '1jN26YeuCpdd82TZzKgtGchqte6da_XTnSeC0DdV8YTA', //change this to another *public* spreadsheet if you want
     range: 'Sheet1!A3:C',
-    key: sheetsAPI
+    auth: authClient
   }, function(err, response) {
     if (err) {
       console.log('The API returned an error: ' + err);
