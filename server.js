@@ -57,7 +57,7 @@ function authenticate(callback){
   }
   var keys = JSON.parse(keysEnvVar);
   var client = googleAuth.fromJSON(keys);
-  client.scopes = ['https://www.googleapis.com/auth/cloud-platform'];
+  client.scopes = SCOPE;
   client.authorize( function() {
     callback(client);
   });
