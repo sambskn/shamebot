@@ -50,20 +50,18 @@ var listener = app.listen(process.env.PORT, function () {
   console.log('Your bot is running on port ' + listener.address().port);
 });
 
-async function authenticate(callback){
-  const keysEnvVar = process.env.GOOGLE_CREDS;
+function authenticate(callback){
+  var keysEnvVar = process.env.GOOGLE_CREDS;
   if (!keysEnvVar) {
     throw new Error("Didn't find Google Credentials ENV var");
   }
-  const keys = JSON.parse(keysEnvVar);
-  const client = auth.fromJSON(keys);
+  var keys = JSON.parse(keysEnvVar);
+  var client = auth.fromJSON(keys);
   client.scopes = ['https://www.googleapis.com/auth/cloud-platform'];
-  await client.authorize();
-  
-  
-  
-  
-  callback(auth);
+  client.authorize( function() {
+    callback(client);
+  });
+
 }
 
 /**
