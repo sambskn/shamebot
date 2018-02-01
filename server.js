@@ -17,12 +17,7 @@ var path = require('path'),
         access_token_secret: process.env.ACCESS_TOKEN_SECRET
       }
     },
-    sheetsAPI = process.env.SHEETS_API_KEY,
     T = new Twit(config.twitter);
-
-    //need to implement google sheets stuff here
-
-
 
 app.use(express.static('public'));
 
@@ -55,8 +50,9 @@ function authenticate(callback){
   if (!keysEnvVar) {
     throw new Error("Didn't find Google Credentials ENV var");
   }
+  var auth = new googleAuth();
   var keys = JSON.parse(keysEnvVar);
-  var client = googleAuth.fromJSON(keys);
+  var client = new auth.fromJSON(keys);
   client.scopes = SCOPE;
   client.authorize( function() {
     callback(client);
